@@ -62,6 +62,8 @@ class OAuthServer extends OAuthRequestVerifier
 	 * @param array options Extra options:
 	 *   - allowed_uri_schemes: list of allowed uri schemes.
 	 *   - disallowed_uri_schemes: list of unallowed uri schemes.
+	 *   - sign_body_of_multipart_request: boolean to add the body in a multipart request to be signed,
+	 *                                     default is false, added for backwards compatablity.
 	 * 
 	 * e.g. Allow only http and https
 	 * $options = array(
@@ -94,6 +96,9 @@ class OAuthServer extends OAuthRequestVerifier
 	 	if (array_key_exists('disallowed_uri_schemes', $options) && is_array($options['disallowed_uri_schemes'])) {
 	 		$this->disallowed_uri_schemes = $options['disallowed_uri_schemes'];
 	 	}
+	 	if (array_key_exists('sign_body_of_multipart_request', $options) && is_array($options['sign_body_of_multipart_request'])) {
+			$this->sign_body_of_multipart_request = $options['sign_body_of_multipart_request'];
+		}
 	}
 	
 	/**

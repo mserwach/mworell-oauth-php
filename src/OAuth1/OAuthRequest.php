@@ -61,6 +61,9 @@ class OAuthRequest
 	/* the body of the OAuth request */
 	protected $body;
 	
+	/* flag if to include the body of a multipart/form-data request, allows for 
+	   backward compatibility, code has been updates to follow the specification */
+	protected $sign_body_of_multipart_request = false;
 
 	/**
 	 * Construct from the current request. Useful for checking the signature of a request.
@@ -112,7 +115,7 @@ class OAuthRequest
 		if (strcasecmp($method, 'POST') == 0)
 		{
 			// TODO: what to do with 'multipart/form-data'?
-			if ($this->getRequestContentType() == 'multipart/form-data')
+			if ($this->sign_body_of_multipart_request === true && $this->getRequestContentType() == 'multipart/form-data')
 			{
 				// Get the posted body (when available)
 				if (!isset($headers['X-OAuth-Test']))
